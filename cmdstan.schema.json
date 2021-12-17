@@ -1,0 +1,670 @@
+{
+  "title": "Config",
+  "type": "object",
+  "properties": {
+    "filename": {
+      "title": "Filename",
+      "type": "string"
+    },
+    "stan_version_major": {
+      "title": "Stan Version Major",
+      "type": "integer"
+    },
+    "stan_version_minor": {
+      "title": "Stan Version Minor",
+      "type": "integer"
+    },
+    "stan_version_patch": {
+      "title": "Stan Version Patch",
+      "type": "integer"
+    },
+    "model": {
+      "title": "Model",
+      "type": "string"
+    },
+    "start_datetime": {
+      "title": "Start Datetime",
+      "type": "string"
+    },
+    "method": {
+      "title": "Method",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/SamplerConfig"
+        },
+        {
+          "$ref": "#/definitions/MLEConfig"
+        },
+        {
+          "$ref": "#/definitions/VariationalConfig"
+        }
+      ]
+    },
+    "id": {
+      "title": "Id",
+      "type": "integer"
+    },
+    "data": {
+      "$ref": "#/definitions/DataConfig"
+    },
+    "init": {
+      "title": "Init",
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+    "random": {
+      "$ref": "#/definitions/RandomConfig"
+    },
+    "output": {
+      "$ref": "#/definitions/OutputConfig"
+    },
+    "num_threads": {
+      "title": "Num Threads",
+      "type": "integer"
+    },
+    "stanc_version": {
+      "title": "Stanc Version",
+      "type": "string"
+    },
+    "stancflags": {
+      "title": "Stancflags",
+      "type": "string"
+    }
+  },
+  "required": [
+    "filename",
+    "stan_version_major",
+    "stan_version_minor",
+    "stan_version_patch",
+    "model",
+    "start_datetime",
+    "method",
+    "id",
+    "data",
+    "init",
+    "random",
+    "output",
+    "num_threads",
+    "stanc_version",
+    "stancflags"
+  ],
+  "definitions": {
+    "SamplerAdaptConfig": {
+      "title": "SamplerAdaptConfig",
+      "type": "object",
+      "properties": {
+        "engaged": {
+          "title": "Engaged",
+          "type": "boolean"
+        },
+        "gamma": {
+          "title": "Gamma",
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "delta": {
+          "title": "Delta",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 1,
+          "type": "number"
+        },
+        "kappa": {
+          "title": "Kappa",
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "t0": {
+          "title": "T0",
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "init_buffer": {
+          "title": "Init Buffer",
+          "type": "integer"
+        },
+        "term_buffer": {
+          "title": "Term Buffer",
+          "type": "integer"
+        },
+        "window": {
+          "title": "Window",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "engaged",
+        "gamma",
+        "delta",
+        "kappa",
+        "t0",
+        "init_buffer",
+        "term_buffer",
+        "window"
+      ]
+    },
+    "NUTSConfigInternal": {
+      "title": "NUTSConfigInternal",
+      "type": "object",
+      "properties": {
+        "max_depth": {
+          "title": "Max Depth",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "max_depth"
+      ]
+    },
+    "NUTSConfig": {
+      "title": "NUTSConfig",
+      "type": "object",
+      "properties": {
+        "nuts": {
+          "$ref": "#/definitions/NUTSConfigInternal"
+        }
+      },
+      "required": [
+        "nuts"
+      ]
+    },
+    "StaticConfigInternal": {
+      "title": "StaticConfigInternal",
+      "type": "object",
+      "properties": {
+        "int_time": {
+          "title": "Int Time",
+          "exclusiveMinimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "int_time"
+      ]
+    },
+    "StaticConfig": {
+      "title": "StaticConfig",
+      "type": "object",
+      "properties": {
+        "static": {
+          "$ref": "#/definitions/StaticConfigInternal"
+        }
+      },
+      "required": [
+        "static"
+      ]
+    },
+    "SamplerHMCConfigInternal": {
+      "title": "SamplerHMCConfigInternal",
+      "type": "object",
+      "properties": {
+        "engine": {
+          "title": "Engine",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/NUTSConfig"
+            },
+            {
+              "$ref": "#/definitions/StaticConfig"
+            }
+          ]
+        },
+        "metric": {
+          "title": "Metric",
+          "enum": [
+            "unit",
+            "diag_e",
+            "dense_e"
+          ],
+          "type": "string"
+        },
+        "metric_file": {
+          "title": "Metric File",
+          "type": "string"
+        },
+        "stepsize": {
+          "title": "Stepsize",
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "stepsize_jitter": {
+          "title": "Stepsize Jitter",
+          "minimum": 0,
+          "maximum": 1,
+          "type": "number"
+        }
+      },
+      "required": [
+        "engine",
+        "metric",
+        "metric_file",
+        "stepsize",
+        "stepsize_jitter"
+      ]
+    },
+    "SamplerHMCConfig": {
+      "title": "SamplerHMCConfig",
+      "type": "object",
+      "properties": {
+        "hmc": {
+          "$ref": "#/definitions/SamplerHMCConfigInternal"
+        }
+      },
+      "required": [
+        "hmc"
+      ]
+    },
+    "SamplerConfigInternal": {
+      "title": "SamplerConfigInternal",
+      "type": "object",
+      "properties": {
+        "num_samples": {
+          "title": "Num Samples",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "num_warmup": {
+          "title": "Num Warmup",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "save_warmup": {
+          "title": "Save Warmup",
+          "type": "boolean"
+        },
+        "thin": {
+          "title": "Thin",
+          "exclusiveMinimum": 0,
+          "type": "integer"
+        },
+        "adapt": {
+          "$ref": "#/definitions/SamplerAdaptConfig"
+        },
+        "algorithm": {
+          "title": "Algorithm",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/SamplerHMCConfig"
+            },
+            {
+              "enum": [
+                "fixed_param"
+              ],
+              "type": "string"
+            }
+          ]
+        },
+        "num_chains": {
+          "title": "Num Chains",
+          "exclusiveMinimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "num_samples",
+        "num_warmup",
+        "save_warmup",
+        "thin",
+        "adapt",
+        "algorithm",
+        "num_chains"
+      ]
+    },
+    "SamplerConfig": {
+      "title": "SamplerConfig",
+      "type": "object",
+      "properties": {
+        "sample": {
+          "$ref": "#/definitions/SamplerConfigInternal"
+        }
+      },
+      "required": [
+        "sample"
+      ]
+    },
+    "LBFGSInternalConfig": {
+      "title": "LBFGSInternalConfig",
+      "type": "object",
+      "properties": {
+        "init_alpha": {
+          "title": "Init Alpha",
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "tol_obj": {
+          "title": "Tol Obj",
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "tol_rel_obj": {
+          "title": "Tol Rel Obj",
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "tol_grad": {
+          "title": "Tol Grad",
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "tol_rel_grad": {
+          "title": "Tol Rel Grad",
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "tol_param": {
+          "title": "Tol Param",
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "history_size": {
+          "title": "History Size",
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "init_alpha",
+        "tol_obj",
+        "tol_rel_obj",
+        "tol_grad",
+        "tol_rel_grad",
+        "tol_param",
+        "history_size"
+      ]
+    },
+    "LBFGSConfig": {
+      "title": "LBFGSConfig",
+      "type": "object",
+      "properties": {
+        "lbfgs": {
+          "$ref": "#/definitions/LBFGSInternalConfig"
+        }
+      },
+      "required": [
+        "lbfgs"
+      ]
+    },
+    "BFGSInternalConfig": {
+      "title": "BFGSInternalConfig",
+      "type": "object",
+      "properties": {
+        "init_alpha": {
+          "title": "Init Alpha",
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "tol_obj": {
+          "title": "Tol Obj",
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "tol_rel_obj": {
+          "title": "Tol Rel Obj",
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "tol_grad": {
+          "title": "Tol Grad",
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "tol_rel_grad": {
+          "title": "Tol Rel Grad",
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "tol_param": {
+          "title": "Tol Param",
+          "exclusiveMinimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "init_alpha",
+        "tol_obj",
+        "tol_rel_obj",
+        "tol_grad",
+        "tol_rel_grad",
+        "tol_param"
+      ]
+    },
+    "BFGSConfig": {
+      "title": "BFGSConfig",
+      "type": "object",
+      "properties": {
+        "bfgs": {
+          "$ref": "#/definitions/BFGSInternalConfig"
+        }
+      },
+      "required": [
+        "bfgs"
+      ]
+    },
+    "MLEConfigInternal": {
+      "title": "MLEConfigInternal",
+      "type": "object",
+      "properties": {
+        "algorithm": {
+          "title": "Algorithm",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/LBFGSConfig"
+            },
+            {
+              "$ref": "#/definitions/BFGSConfig"
+            },
+            {
+              "enum": [
+                "newton"
+              ],
+              "type": "string"
+            }
+          ]
+        },
+        "iter": {
+          "title": "Iter",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "save_iterations": {
+          "title": "Save Iterations",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "algorithm",
+        "iter",
+        "save_iterations"
+      ]
+    },
+    "MLEConfig": {
+      "title": "MLEConfig",
+      "type": "object",
+      "properties": {
+        "optimize": {
+          "$ref": "#/definitions/MLEConfigInternal"
+        }
+      },
+      "required": [
+        "optimize"
+      ]
+    },
+    "FullrankConfig": {
+      "title": "FullrankConfig",
+      "type": "object",
+      "properties": {
+        "fullrank": {
+          "title": "Fullrank",
+          "default": {},
+          "type": "object"
+        }
+      }
+    },
+    "MeanfieldConfig": {
+      "title": "MeanfieldConfig",
+      "type": "object",
+      "properties": {
+        "meanfield": {
+          "title": "Meanfield",
+          "default": {},
+          "type": "object"
+        }
+      }
+    },
+    "VariationalAdaptConfig": {
+      "title": "VariationalAdaptConfig",
+      "type": "object",
+      "properties": {
+        "engaged": {
+          "title": "Engaged",
+          "type": "boolean"
+        },
+        "iter": {
+          "title": "Iter",
+          "exclusiveMinimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "engaged",
+        "iter"
+      ]
+    },
+    "VariationalConfigInternal": {
+      "title": "VariationalConfigInternal",
+      "type": "object",
+      "properties": {
+        "algorithm": {
+          "title": "Algorithm",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/FullrankConfig"
+            },
+            {
+              "$ref": "#/definitions/MeanfieldConfig"
+            }
+          ]
+        },
+        "iter": {
+          "title": "Iter",
+          "exclusiveMinimum": 0,
+          "type": "integer"
+        },
+        "grad_samples": {
+          "title": "Grad Samples",
+          "exclusiveMinimum": 0,
+          "type": "integer"
+        },
+        "eta": {
+          "title": "Eta",
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "adapt": {
+          "$ref": "#/definitions/VariationalAdaptConfig"
+        },
+        "tol_rel_obj": {
+          "title": "Tol Rel Obj",
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "eval_elbo": {
+          "title": "Eval Elbo",
+          "exclusiveMinimum": 0,
+          "type": "integer"
+        },
+        "output_samples": {
+          "title": "Output Samples",
+          "exclusiveMinimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "algorithm",
+        "iter",
+        "grad_samples",
+        "eta",
+        "adapt",
+        "tol_rel_obj",
+        "eval_elbo",
+        "output_samples"
+      ]
+    },
+    "VariationalConfig": {
+      "title": "VariationalConfig",
+      "type": "object",
+      "properties": {
+        "variational": {
+          "$ref": "#/definitions/VariationalConfigInternal"
+        }
+      },
+      "required": [
+        "variational"
+      ]
+    },
+    "DataConfig": {
+      "title": "DataConfig",
+      "type": "object",
+      "properties": {
+        "file": {
+          "title": "File",
+          "type": "string"
+        }
+      },
+      "required": [
+        "file"
+      ]
+    },
+    "RandomConfig": {
+      "title": "RandomConfig",
+      "type": "object",
+      "properties": {
+        "seed": {
+          "title": "Seed",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "seed"
+      ]
+    },
+    "OutputConfig": {
+      "title": "OutputConfig",
+      "type": "object",
+      "properties": {
+        "file": {
+          "title": "File",
+          "type": "string"
+        },
+        "diagnostic_file": {
+          "title": "Diagnostic File",
+          "type": "string"
+        },
+        "refresh": {
+          "title": "Refresh",
+          "type": "integer"
+        },
+        "sig_figs": {
+          "title": "Sig Figs",
+          "type": "integer"
+        },
+        "profile_file": {
+          "title": "Profile File",
+          "type": "string"
+        }
+      },
+      "required": [
+        "file",
+        "diagnostic_file",
+        "refresh",
+        "sig_figs",
+        "profile_file"
+      ]
+    }
+  }
+}

@@ -1,0 +1,55 @@
+# stan_version_major = 2
+# stan_version_minor = 27
+# stan_version_patch = 0
+# model = bernoulli_model
+# start_datetime = 2021-12-15 15:33:42 UTC
+# method = variational
+#   variational
+#     algorithm = meanfield (Default)
+#       meanfield
+#     iter = 10000 (Default)
+#     grad_samples = 1 (Default)
+#     elbo_samples = 100 (Default)
+#     eta = 1 (Default)
+#     adapt
+#       engaged = 1 (Default)
+#       iter = 50 (Default)
+#     tol_rel_obj = 0.01 (Default)
+#     eval_elbo = 100 (Default)
+#     output_samples = 1000 (Default)
+# id = 1 (Default)
+# data
+#   file = bernoulli.data.json
+# init = 2 (Default)
+# random
+#   seed = 3320047560 (Default)
+# output
+#   file = output.csv (Default)
+#   diagnostic_file =  (Default)
+#   refresh = 100 (Default)
+#   sig_figs = -1 (Default)
+#   profile_file = profile.csv (Default)
+# num_threads = 1 (Default)
+# stanc_version = %%NAME%%3 %%VERSION%%
+# stancflags =
+lp__,log_p__,log_g__,theta
+# Stepsize adaptation complete.
+# eta = 1
+0,0,0,0.206871
+0,-8.58121,-1.46977,0.0715194
+0,-8.95584,-1.90749,0.0610318
+0,-6.84948,-0.00394301,0.196698
+0,-6.75326,-0.0308197,0.237349
+0,-6.81548,-0.232847,0.297669
+0,-8.47371,-1.35016,0.0749586
+0,-7.26348,-0.225023,0.139298
+0,-6.75281,-0.0319041,0.237907
+0,-7.82435,-1.33654,0.454925
+0,-7.00387,-0.0632985,0.1684
+0,-8.26207,-1.1229,0.0824145
+0,-8.72345,-2.13795,0.531745
+0,-7.1005,-0.605227,0.363268
+0,-6.79895,-0.204078,0.291234
+0,-6.93405,-0.0308543,0.179372
+0,-6.84588,-0.00326601,0.197596
+0,-6.79684,-0.00108528,0.212362
