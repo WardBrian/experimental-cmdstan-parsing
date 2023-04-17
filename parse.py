@@ -34,7 +34,7 @@ def parse_subtree(filehandle, data, spaces=2):
     filehandle.seek(pos)
 
 
-def parse_csv(file):
+def read_csv_header(file):
     with open(file, "r") as f:
         header_data = {"filename": file}
         parse_subtree(f, header_data, 2)

@@ -1,4 +1,4 @@
-from typing import Literal, Union
+from typing import Literal, Union, Optional
 from pydantic import BaseModel
 from pydantic.types import (
     NonNegativeInt,
@@ -31,5 +31,6 @@ class MLEConfig(BaseModel):
         algorithm: Union[LBFGSConfig, BFGSConfig, Literal["newton"]]
         iter: NonNegativeInt
         save_iterations: bool
+        jacobian: Optional[bool] = False
 
     optimize: MLEConfigInternal
